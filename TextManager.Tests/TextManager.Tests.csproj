@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="./TextManager/TextManager.csproj" />
+    <ProjectReference Include="../TextManager/TextManager.csproj" />
   </ItemGroup>
 
 </Project>
