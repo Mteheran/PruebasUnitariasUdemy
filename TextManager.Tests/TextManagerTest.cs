@@ -13,18 +13,20 @@ public class TextManagerTest
         TextManagerGlobal = new TextManager("hola hola desde xunit");
     }
 
-    [Fact]
-    public void CountWords()
+    [Theory]
+    [InlineData("Hola Mundo", 2)]
+    [InlineData("", 0)]
+    [InlineData("Saludos a todos desde el curso de xunit", 8)]
+    public void CountWords(string text, int expected)
     {
         //Arrange
-        var textManager = new TextManager("Texto Prueba hola mundo");
+        var textManager = new TextManager(text);
 
         //Act
         var result = textManager.CountWords();
 
-        //Assert
-        Assert.True(result > 1);
-        Assert.Equal(4, result);
+        //Assert       
+        Assert.Equal(expected, result);
 
     }
 
