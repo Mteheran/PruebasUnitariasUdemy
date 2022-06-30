@@ -5,6 +5,7 @@ namespace TextManager
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// general class for manager text
@@ -16,11 +17,14 @@ namespace TextManager
         /// Initializes a new instance of the <see cref="TextManager" /> class.
         /// </summary>
         /// <param name="strText">Text using for changes and caculate values</param>
-        public TextManager(string strText)
+        public TextManager(string strText, ILogger<TextManager> logger)
         {
             this.TextOriginal = strText;
             this.TextEdited = strText;
+            this.logger = logger;
         }
+
+        private  ILogger<TextManager> logger;
 
         /// <summary>
         /// Original text asignate in cretion object
@@ -52,6 +56,8 @@ namespace TextManager
                     intCount++; 
                 }
             }
+
+            logger.LogInformation($"Count {intCount} for text  {TextOriginal}");
 
             return intCount;
         }

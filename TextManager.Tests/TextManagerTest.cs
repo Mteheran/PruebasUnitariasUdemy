@@ -2,16 +2,20 @@ using Xunit;
 using TextManager;
 using System.Text.RegularExpressions;
 using Moq;
+using Microsoft.Extensions.Logging;
 
 namespace TextManager.Tests;
 
 public class TextManagerTest
 {
     TextManager TextManagerGlobal;
+    ILogger<TextManager> loggerTest;
 
     public TextManagerTest()
     {
-        TextManagerGlobal = new TextManager("hola hola desde xunit");
+        var mock = new Mock<ILogger<TextManager>>();
+        loggerTest = mock.Object;
+        TextManagerGlobal = new TextManager("hola hola desde xunit", loggerTest);
     }
 
     [Theory]
@@ -21,7 +25,7 @@ public class TextManagerTest
     public void CountWords(string text, int expected)
     {
         //Arrange
-        var textManager = new TextManager(text);
+        var textManager = new TextManager(text, loggerTest);
 
         //Act
         var result = textManager.CountWords();
@@ -36,7 +40,7 @@ public class TextManagerTest
     public void CountWords_ClassData(string text, int expected)
     {
         //Arrange
-        var textManager = new TextManager(text);
+        var textManager = new TextManager(text, loggerTest);
 
         //Act
         var result = textManager.CountWords();
@@ -50,7 +54,7 @@ public class TextManagerTest
     public void CountWords_NotZero()
     {
         //Arrange
-        var textManager = new TextManager("Texto");
+        var textManager = new TextManager("Texto", loggerTest);
 
         //Act
         var result = textManager.CountWords();
@@ -64,7 +68,7 @@ public class TextManagerTest
     public void CountWords_NotZero_Moq()
     {
         //Arrange
-        var mock = new Mock<TextManager>("Texto");
+        var mock = new Mock<TextManager>("Texto", loggerTest);
         mock.Setup(p=> p.CountWords()).Returns(1);
 
         //Act
@@ -78,7 +82,7 @@ public class TextManagerTest
     [Fact]
     public void FindWord()
     {
-        var textManager = new TextManager("hola hola desde xunit");
+        var textManager = new TextManager("hola hola desde xunit", loggerTest);
 
         var result = textManager.FindWord("hola", true);
 
