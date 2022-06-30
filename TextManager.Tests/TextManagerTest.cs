@@ -1,6 +1,7 @@
 using Xunit;
 using TextManager;
 using System.Text.RegularExpressions;
+using Moq;
 
 namespace TextManager.Tests;
 
@@ -60,6 +61,21 @@ public class TextManagerTest
     }
 
     [Fact]
+    public void CountWords_NotZero_Moq()
+    {
+        //Arrange
+        var mock = new Mock<TextManager>("Texto");
+        mock.Setup(p=> p.CountWords()).Returns(1);
+
+        //Act
+        var result = mock.Object.CountWords();
+
+        //Assert
+        Assert.NotEqual(0, result);
+
+    }
+
+    [Fact]
     public void FindWord()
     {
         var textManager = new TextManager("hola hola desde xunit");
@@ -85,7 +101,7 @@ public class TextManagerTest
     {
         var result = TextManagerGlobal.FindExactWord("mundo", true);
 
-        Assert.IsType<List<Match>>(result);
+        Assert.IsType<List<System.Text.RegularExpressions.Match>>(result);
     } 
 
     [Fact]

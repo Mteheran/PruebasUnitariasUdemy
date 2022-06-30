@@ -36,7 +36,7 @@ namespace TextManager
         /// Count number words in orginal text
         /// </summary>
         /// <returns>int with counted words</returns>
-        public int CountWords()
+        public virtual int CountWords()
         {
             // var set number word and return calculate value
             int intCount = 0;
